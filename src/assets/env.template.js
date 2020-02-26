@@ -2,6 +2,5 @@
     window["env"] = window["env"] || {};
   
     // Environment variables
-    window["env"]["springBootUrl"] = "${SPRINGBOOT_SERVICE_URL}";
-    window["env"]["hostName"] = "${HOSTNAME}";
+    window["env"]["kubernetesApiUrl"] = "${KUBERNETESAPI_SERVICE_URL}";
   })(this);
