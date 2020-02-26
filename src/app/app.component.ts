@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { HttpHeaders } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
+import { FibonacciJobService } from 'src/app/services/fibonacci-job.service';
+import { NodesService } from 'src/app/services/nodes.service';
 
 @Component({
   selector: 'app-root',
@@ -9,66 +8,59 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor(private http:HttpClient) { } 
 
-  private kubernetesApiUrl: string = environment.kubernetesApiUrl;
-  public jobCountDisplay: string = "";
-  public jobStatusDisplay: string = "";
-  public jobParametersDisplay: string = "";
-  public nodesCountDisplay: string = "";
-  public nodesStatusDisplay: string = "";
-  public statusDisplay: string = "";
+  public jobCountDisplay: string;
+  public jobStatusDisplay: string;
+  public jobParametersDisplay: string;
+  public nodesCountDisplay: string;
+  public nodesStatusDisplay: string;
+  public statusDisplay: string[] = [];
 
-  private get(path: string) {
-    let url: string = this.kubernetesApiUrl + path;
-    return this.http.get<string>(url, { responseType: "text"});
-  }
+  constructor(
+    private jobService: FibonacciJobService,
+    private nodesService: NodesService,
+  ) { } 
 
   public getJobCount() {
-    this.get("/api/fibonacci-job/count")
-      .subscribe((value: string) => {
-        this.jobCountDisplay = value; });
+    this.jobService.getCount().subscribe((value) => {
+      this.jobCountDisplay = value;
+    });
   }
 
   public getJobStatus() {
-    this.get("/api/fibonacci-job/status")
-      .subscribe((value: string) => {
-        this.jobStatusDisplay = value; });
+    this.jobService.getStatus().subscribe((value) => {
+      this.jobStatusDisplay = value;
+    });
   }
 
   public getJobParameters() {
-    this.get("/api/fibonacci-job/parameters")
-      .subscribe((value: string) => {
-        this.jobParametersDisplay = value; });
+    this.jobService.getParameters().subscribe((value) => {
+      this.jobParametersDisplay = value;
+    });
   }
 
   public getNodesCount() {
-    this.get("/api/nodes/count")
-      .subscribe((value: string) => {
-        this.nodesCountDisplay = value; });
+    this.nodesService.getCount().subscribe((value) => {
+      this.nodesCountDisplay = value;
+    });
   }
 
   public getNodesStatus() {
-    this.get("/api/nodes/status")
-      .subscribe((value: string) => {
-        this.nodesStatusDisplay = value; });
+    this.nodesService.getStatus().subscribe((value) => {
+      this.nodesStatusDisplay = value;
+    });
   }
 
   public startJob() {
-    let path: string = "/api/fibonacci-job"
-    let url: string = this.kubernetesApiUrl + path;
-    let parameters: any = { requests: 2000, concurrency: 10 };
-    let headers: any = new HttpHeaders().set("Content-Type", "application/json");
-    this.http.put(url, parameters, { headers })
-      .subscribe(() => {
-        this.statusDisplay = "Job Started"; });
+    this.jobService.start().subscribe((value) => {
+      this.statusDisplay.push("Job Started");
+    });
   }
 
   public stopJob() {
-    let path: string = "/api/fibonacci-job"
-    let url: string = this.kubernetesApiUrl + path;
-    this.http.delete(url)
-      .subscribe(() => {
-        this.statusDisplay = "Job Deleted"; });
+    this.jobService.stop().subscribe((value) => {
+      this.statusDisplay.push("Job Stopped");
+    });
   }
+
 }

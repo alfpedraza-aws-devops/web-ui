@@ -17,4 +17,4 @@
 
 <button (click)="startJob()">Start Job</button>
 <button (click)="stopJob()">Stop Job</button>
-<div><pre>{{statusDisplay}}</pre></div>
+<ul><li *ngFor="let status of statusDisplay">{{status}}</li></ul>
