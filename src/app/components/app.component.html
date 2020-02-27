@@ -1,0 +1,24 @@
+<h1>Kubernetes Load Test</h1>
+
+<div>
+    <h2>Job Parameters</h2>
+    <div>Requests: <input type="text" /></div>
+    <div>Concurrency: <input type="text" /></div>
+    <button (click)="startJob()">Start Job</button>
+    <button (click)="stopJob()">Stop Job</button>
+</div>
+
+<div>
+    <h2>Nodes Status:</h2>
+    <pre>{{nodesStatusDisplay}}</pre>
+</div>
+
+<div>
+    <h2>Job Status:</h2>
+    <pre>{{jobStatusDisplay}}</pre>
+</div>
+
+<div>
+    <h2>Events</h2>
+    <ul><li *ngFor="let status of statusDisplay">{{status}}</li></ul>
+</div>

@@ -9,19 +9,19 @@ export class HttpHelper {
 
     constructor(private http: HttpClient) { }
 
-    public get(path: string) : Observable<string> {
+    public get(path: string): Observable<string> {
         let url = environment.kubernetesApiUrl + path;
         let result = this.http.get(url, { responseType: 'text'});
         return result;
     }
 
-    public put(path: string, parameters: any) : Observable<object> {
+    public put(path: string, parameters: any): Observable<object> {
         let url = environment.kubernetesApiUrl + path;
         let headers = new HttpHeaders().set("Content-Type", "application/json");
         return this.http.put(url, parameters, { headers });
     }
 
-    public delete(path: string) : Observable<object> {
+    public delete(path: string): Observable<object> {
         let url = environment.kubernetesApiUrl + path;
         return this.http.delete(url);
     }
