@@ -7,12 +7,12 @@ export class NodesService {
 
     constructor(private http: HttpHelper) { }
 
-    public getCount(): Observable<string> {
-        return this.http.get("/api/nodes/count");
+    public getCount(): Observable<number> {
+        return this.http.get<number>("/api/nodes/count");
     }
 
     public getStatus(): Observable<string> {
-        return this.http.get("/api/nodes/status");
+        return this.http.getText("/api/nodes/status");
     }
     
 }

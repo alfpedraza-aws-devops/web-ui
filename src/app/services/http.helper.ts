@@ -9,7 +9,13 @@ export class HttpHelper {
 
     constructor(private http: HttpClient) { }
 
-    public get(path: string): Observable<string> {
+    public get<T>(path: string): Observable<T> {
+        let url = environment.kubernetesApiUrl + path;
+        let result = this.http.get<T>(url);
+        return result;
+    }
+
+    public getText(path: string): Observable<string> {
         let url = environment.kubernetesApiUrl + path;
         let result = this.http.get(url, { responseType: 'text'});
         return result;
