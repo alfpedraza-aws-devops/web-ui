@@ -26,8 +26,10 @@ export class AppComponent implements OnInit, OnDestroy {
     private nodesService: NodesService,
   ) { }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.startRefresh();
+    this.jobCountDisplay = await this.jobService.getCount().toPromise();
+    this.nodesCountDisplay = await this.nodesService.getCount().toPromise();
   }
 
   ngOnDestroy(): void {

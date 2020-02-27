@@ -1,24 +1,45 @@
+<div class="container">
 <h1>Kubernetes Load Test</h1>
+<div class="row">
+    <div class="col-sm-8">
+        
 
-<div>
-    <h2>Job Parameters</h2>
-    <div>Requests: <input type="text" /></div>
-    <div>Concurrency: <input type="text" /></div>
-    <button (click)="startJob()">Start Job</button>
-    <button (click)="stopJob()">Stop Job</button>
+        <div class="row">
+            <div class="col-sm-6">
+                <h2>Job Parameters</h2>
+
+                <div class="form-group">
+                    <label for="requests">Requests</label>
+                    <input type="number" class="form-control" id="requests" name="requests" min="1" max="10000" placeholder="Enter number of requests">
+                </div>
+
+                <div class="form-group">
+                    <label for="concurrency">Concurrency</label>
+                    <input type="number" class="form-control" id="concurrency" min="1" max="100" placeholder="Enter number of concurrency">
+                </div>
+
+                <button (click)="startJob()" class="btn btn-lg btn-primary btn-block">Start Job</button>
+                <button (click)="stopJob()" class="btn btn-lg btn-primary btn-block">Stop Job</button>
+            </div>
+            <div class="col-sm-6">
+            </div>
+        </div>
+
+        <div>
+            <h2>Node Status</h2>
+            <pre>{{nodesStatusDisplay}}</pre>
+        </div>
+
+        <div>
+            <h2>HPA Status</h2>
+            <pre>{{jobStatusDisplay}}</pre>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div>
+            <h2>Events</h2>
+            <ul><li *ngFor="let status of statusDisplay">{{status}}</li></ul>
+        </div>
+    </div>
 </div>
-
-<div>
-    <h2>Nodes Status:</h2>
-    <pre>{{nodesStatusDisplay}}</pre>
-</div>
-
-<div>
-    <h2>Job Status:</h2>
-    <pre>{{jobStatusDisplay}}</pre>
-</div>
-
-<div>
-    <h2>Events</h2>
-    <ul><li *ngFor="let status of statusDisplay">{{status}}</li></ul>
 </div>
