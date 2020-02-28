@@ -1,10 +1,11 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subject, Subscription, forkJoin, timer } from 'rxjs';
-import { JobParameters } from 'src/app/services/jobParameters.class';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { forkJoin } from 'rxjs';
+
+import { JobParameters } from 'src/app/models/jobParameters.model';
+import { MessageItem } from 'src/app/models/message-item.model';
 import { FibonacciJobService } from 'src/app/services/fibonacci-job.service';
 import { NodesService } from 'src/app/services/nodes.service';
-import { Message } from '@angular/compiler/src/i18n/i18n_ast';
+import { JobParametersFormComponent } from 'src/app/components/job-parameters-form.component';
 
 @Component({
   selector: 'app-root',
@@ -14,9 +15,9 @@ export class AppComponent implements OnInit, OnDestroy {
 
   public loading: boolean = true;
   public initialized: boolean = false;
-  public registerForm: FormGroup;
-  public submitted: boolean = false;
+  private intervalId: any;
 
+  // Model Properties
   public jobCount: number;
   public jobStatus: string;
   public jobParameters: JobParameters = new JobParameters();
@@ -24,88 +25,56 @@ export class AppComponent implements OnInit, OnDestroy {
   public nodesCount: number;
   public nodesStatus: string;
   public lastUpdate: Date;
-  public statusDisplay: Array<MessageItem> = [];
+  public statusDisplay: MessageItem[] = [];
 
-  private refreshSubject: Subject<any>;
-  private refreshSubscription: Subscription;
-  private timerSubscription: Subscription;
+  @ViewChild(JobParametersFormComponent, { static: true })
+  private jobParametersForm: JobParametersFormComponent;
   
   constructor(
     private jobService: FibonacciJobService,
-    private nodesService: NodesService,
-    private formBuilder: FormBuilder
+    private nodesService: NodesService
   ) { }
 
   ngOnInit(): void {
-    this.initializeForm();
     this.initialize();
-    this.startRefresh();
+    this.refresh();
   }
 
   ngOnDestroy(): void {
     this.stopRefresh();
   }
 
-  private initializeForm(): void {
-    this.registerForm = this.formBuilder.group({
-      requests: ['', [Validators.required, Validators.min(1), Validators.max(10000)]],
-      concurrency: ['', [Validators.required, Validators.min(1), Validators.max(100)]]});
-      this.registerForm.valueChanges.subscribe(data => {
-        this.jobParameters.requests = data.requests;
-        this.jobParameters.concurrency = data.concurrency;
-      });
-  }
-
-  get f() { return this.registerForm.controls; }
-
   private async initialize(): Promise<void> {
-    this.jobCount = await this.jobService.getCount().toPromise();
+    this.jobCount = await this.jobService.getCount();
     if (this.jobCount == 1) {
-      this.jobParameters = await this.jobService.getParameters().toPromise();
+      this.jobParameters = await this.jobService.getParameters();
     } else {
-      this.jobParameters.requests = 2000;
-      this.jobParameters.concurrency = 8;
+      this.jobParameters.requests = 1000;
+      this.jobParameters.concurrency = 20;
     }
-    this.registerForm.patchValue(this.jobParameters);
+    this.jobParametersForm.setJobParameters(this.jobParameters);
     this.loading = false;
   }
 
-  private startRefresh(): void {
-    this.refreshSubject = new Subject();
-    this.refreshSubscription =
-      this.refreshSubject.subscribe(() => {
-        this.requestRefresh()
-      });
-    this.refreshSubject.next();
-  }
-
-  private requestRefresh(): void {
+  private refresh() {
     forkJoin(
       this.jobService.getCount(),
       this.jobService.getStatus(),
       this.nodesService.getCount(),
       this.nodesService.getStatus()
+
     ).subscribe(results => {
-      this.refresh(results)
+      this.previousNodesCount = this.nodesCount;
+      this.jobCount = results[0];
+      this.jobStatus = results[1];
+      this.nodesCount = results[2];
+      this.nodesStatus = results[3];
+      this.lastUpdate = new Date();
+
+      this.detectNodeChanges();
+      this.initialized = true;
+      this.intervalId = setInterval(() => this.refresh(), 5000);
     });
-  }
-
-  private refresh(results: any[]): void {
-    // Display all the values in the results.
-    this.previousNodesCount = this.nodesCount;
-    this.jobCount = results[0];
-    this.jobStatus = results[1];
-    this.nodesCount = results[2];
-    this.nodesStatus = results[3];
-    this.lastUpdate = new Date();
-    this.detectNodeChanges();
-    this.initialized = true;
-
-    // After 5 seconds, requests another refresh. 
-    this.timerSubscription =
-      timer(5000).subscribe(() => {
-        this.refreshSubject.next();
-      });
   }
 
   private detectNodeChanges(): void {
@@ -122,26 +91,21 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   private stopRefresh(): void {
-    if (this.timerSubscription) this.timerSubscription.unsubscribe();
-    if (this.refreshSubscription) this.refreshSubscription.unsubscribe();
+    if (this.intervalId) clearInterval(this.intervalId);
   }
 
-  public async startJob() {
-    this.submitted = true;
-    if (this.registerForm.invalid) return;
-
+  public async onJobStarted(parameters: JobParameters): Promise<void> {
     this.loading = true;
-    await this.jobService.start(this.jobParameters).toPromise();
-    this.jobCount = await this.jobService.getCount().toPromise();
+    await this.jobService.start(this.jobParameters);
+    this.jobCount = await this.jobService.getCount();
     this.pushMessage("Job started");
     this.loading = false;
-    this.submitted = false;
   }
 
-  public async stopJob() {
+  public async onJobStopped(): Promise<void> {
     this.loading = true;
-    await this.jobService.stop().toPromise();
-    this.jobCount = await this.jobService.getCount().toPromise();
+    await this.jobService.stop();
+    this.jobCount = await this.jobService.getCount();
     this.pushMessage("Job stopped");
     this.loading = false;
   }
@@ -153,9 +117,4 @@ export class AppComponent implements OnInit, OnDestroy {
     this.statusDisplay.push(item);
   }
 
-}
-
-export class MessageItem {
-  public date: Date;
-  public message: string;
 }

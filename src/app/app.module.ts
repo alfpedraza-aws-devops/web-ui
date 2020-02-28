@@ -6,9 +6,18 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './components/app.component';
 
+import { NodesStatusComponent } from './components/nodes-status.component';
+import { JobStatusComponent } from './components/job-status.component';
+import { EventDisplayComponent } from './components/event-display.component';
+import { JobParametersFormComponent } from './components/job-parameters-form.component';
+
 @NgModule({
   declarations: [
-    AppComponent
+    NodesStatusComponent,
+    JobStatusComponent,
+    EventDisplayComponent,
+    JobParametersFormComponent,
+    AppComponent,
   ],
   imports: [
     BrowserModule,

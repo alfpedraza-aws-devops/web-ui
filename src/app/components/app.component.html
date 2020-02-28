@@ -1,75 +1,42 @@
 <div *ngIf="loading">
-    <div style="position:absolute; z-index:1000; top:0; left:0;
-        width:100%; height:100%; background-color:black; opacity:0.6;">
+    <div style="position: absolute; z-index: 1000; top: 0; left: 0;
+        width: 100%; height: 100%; background-color: black; opacity: 0.8;">
     </div>
-    <div style="position:absolute;z-index:1001;top: 50%;left: 50%;
-        transform: translate(-50%, -50%);color:white;">Loading...</div>
+    <div style="position: absolute; z-index: 1001; top: 50%; left: 50%;
+        transform: translate(-50%,-50%);color:white;">Loading...</div>
 </div> 
 
-<div *ngIf="initialized">
+<div [hidden]="!initialized">
 <nav class="navbar bg-primary text-light">
     <h1>Kubernetes Load Test</h1>
 </nav>
 <div class="container-fluid">
-<div class="row">
-    <div class="col-8">
-        <div class="m-2">
-            <h2>Node Status</h2>
-            <pre class="bg-dark text-white p-1">{{nodesStatus}}</pre>
-        </div>
-
-        <div class="m-2">
-            <h2>HoriontalPodAutoscaler Status</h2>
-            <pre class="bg-dark text-white p-1">{{jobStatus}}</pre>
-        </div>
+    <div class="col-md-4 p-2 float-md-right">
+        <job-parameters-form
+            [enabled]="(jobCount == 0)"
+            [jobParameters]="jobParameters"
+            (jobStarted)="onJobStarted($event)"
+            (jobStopped)="onJobStopped($event)">
+        </job-parameters-form>
     </div>
 
-    <div class="col-4">
-        <div class="m-2">
-            <h2>Job Parameters</h2>
-
-            <form [formGroup]="registerForm">
-                <div class="form-group">
-                    <label>Requests:</label>
-                    <input
-                        [attr.disabled]="(jobCount == '1') ? '' : null"
-                        type="number" class="form-control"
-                        [ngClass]="{ 'is-invalid': submitted && f.requests.errors }"
-                        formControlName="requests"
-                        min="1" max="10000"
-                        placeholder="Enter number of requests">
-                    <div *ngIf="submitted && f.requests.errors" class="invalid-feedback">
-                        Please specify a number between 1 and 10,000 (inclusive).
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Concurrency:</label>
-                    <input
-                        [attr.disabled]="(jobCount == '1') ? '' : null"
-                        type="number" class="form-control"
-                        [ngClass]="{ 'is-invalid': submitted && f.concurrency.errors }"
-                        formControlName="concurrency"
-                        min="1" max="100"
-                        placeholder="Enter number of concurrency">
-                    <div *ngIf="submitted && f.concurrency.errors" class="invalid-feedback">
-                        Please specify a number between 1 and 100 (inclusive).
-                    </div>
-                </div>
-
-                <button (click)="startJob()" [hidden]="jobCount == '1'"
-                    class="btn btn-lg btn-primary btn-block">Start Job</button>
-                <button (click)="stopJob()" [hidden]="jobCount == '0'"
-                    class="btn btn-lg btn-primary btn-block">Stop Job</button>
-            </form>
-        </div>
-        <div class="m-2">
-            <h2>Events</h2>
-            <p>Last Update: {{lastUpdate | date:'medium'}}</p>
-            <ul><li *ngFor="let status of statusDisplay">
-                {{status.date | date:'medium'}} - {{status.message}}</li></ul>
-        </div>
+    <div class="col-md-8 p-2 float-md-left">
+        <nodes-status
+            [nodesStatus]="nodesStatus">
+        </nodes-status>
     </div>
-</div>
+
+    <div class="col-md-8 p-2 float-md-left">
+        <job-status
+            [jobStatus]="jobStatus">
+        </job-status>
+    </div>
+
+    <div class="col-md-4 p-2 float-md-right">
+        <event-display
+            [lastUpdate]="lastUpdate"
+            [statusDisplay]="statusDisplay">
+        </event-display>
+    </div>
 </div>
 </div>
