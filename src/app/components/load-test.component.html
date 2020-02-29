@@ -1,0 +1,29 @@
+<div class="container-fluid">
+    <div class="col-md-4 p-2 float-md-right">
+        <job-parameters-form
+            [enabled]="(jobCount == 0)"
+            [jobParameters]="jobParameters"
+            (jobStarted)="onJobStarted($event)"
+            (jobStopped)="onJobStopped($event)">
+        </job-parameters-form>
+    </div>
+
+    <div class="col-md-8 p-2 float-md-left">
+        <nodes-status
+            [nodesStatus]="nodesStatus">
+        </nodes-status>
+    </div>
+
+    <div class="col-md-8 p-2 float-md-left">
+        <job-status
+            [jobStatus]="jobStatus">
+        </job-status>
+    </div>
+
+    <div class="col-md-4 p-2 float-md-right">
+        <event-display
+            [lastUpdate]="lastUpdate"
+            [statusDisplay]="statusDisplay">
+        </event-display>
+    </div>
+</div>

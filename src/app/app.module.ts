@@ -10,6 +10,9 @@ import { NodesStatusComponent } from './components/nodes-status.component';
 import { JobStatusComponent } from './components/job-status.component';
 import { EventDisplayComponent } from './components/event-display.component';
 import { JobParametersFormComponent } from './components/job-parameters-form.component';
+import { LoadTestComponent } from './components/load-test.component';
+import { TitleBarComponent } from './components/title-bar.component';
+import { LoadingPopupComponent } from './components/loading-popup.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +20,9 @@ import { JobParametersFormComponent } from './components/job-parameters-form.com
     JobStatusComponent,
     EventDisplayComponent,
     JobParametersFormComponent,
+    LoadTestComponent,
+    TitleBarComponent,
+    LoadingPopupComponent,
     AppComponent,
   ],
   imports: [

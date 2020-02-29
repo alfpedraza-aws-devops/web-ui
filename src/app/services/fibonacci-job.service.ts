@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpHelper } from 'src/app/services/httpHelper.service';
-import { JobParameters } from 'src/app/models/jobParameters.model';
+import { HttpHelper } from 'src/app/services/http-helper.service';
+import { JobParameters } from 'src/app/models/job-parameters.model';
 
 /**
  * Consumes a REST endpoint to perform several operations with the Fibonacci Job.

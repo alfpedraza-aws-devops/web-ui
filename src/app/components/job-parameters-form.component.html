@@ -1,46 +1,48 @@
-<h2>Job Parameters</h2>
+<div>
+    <h2>Job Parameters</h2>
 
-<form [formGroup]="form">
-    <div class="form-group">
-        <label>Requests:</label>
-        <input
-            formControlName="requests"
-            type="number"
-            min="1" max="10000"
-            [attr.disabled]="!enabled ? 'disabled' : null"
-            class="form-control"
-            [ngClass]="{ 'is-invalid': submitted && f.requests.errors }"
-            placeholder="Enter number of requests" />
-        <div *ngIf="submitted && f.requests.errors" class="invalid-feedback">
-            Please specify a number between 1 and 10,000 (inclusive).
+    <form [formGroup]="form">
+        <div class="form-group">
+            <label>Requests:</label>
+            <input
+                formControlName="requests"
+                type="number"
+                min="1" max="10000"
+                [attr.disabled]="!enabled ? 'disabled' : null"
+                class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f.requests.errors }"
+                placeholder="Enter number of requests" />
+            <div *ngIf="submitted && f.requests.errors" class="invalid-feedback">
+                Please specify a number between 1 and 10,000 (inclusive).
+            </div>
         </div>
-    </div>
-
-    <div class="form-group">
-        <label>Concurrency:</label>
-        <input
-            formControlName="concurrency"
-            type="number" 
-            min="1" max="100"
-            [attr.disabled]="!enabled ? 'disabled' : null"
-            class="form-control"
-            [ngClass]="{ 'is-invalid': submitted && f.concurrency.errors }"
-            placeholder="Enter number of concurrency" />
-        <div *ngIf="submitted && f.concurrency.errors" class="invalid-feedback">
-            Please specify a number between 1 and 100 (inclusive).
+    
+        <div class="form-group">
+            <label>Concurrency:</label>
+            <input
+                formControlName="concurrency"
+                type="number" 
+                min="1" max="100"
+                [attr.disabled]="!enabled ? 'disabled' : null"
+                class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && f.concurrency.errors }"
+                placeholder="Enter number of concurrency" />
+            <div *ngIf="submitted && f.concurrency.errors" class="invalid-feedback">
+                Please specify a number between 1 and 100 (inclusive).
+            </div>
         </div>
-    </div>
-
-    <button
-        (click)="startJob()" 
-        [hidden]="!enabled"
-        class="btn btn-lg btn-primary btn-block">
-        Start Job
-    </button>
-    <button 
-        (click)="stopJob()"
-        [hidden]="enabled"
-        class="btn btn-lg btn-primary btn-block">
-        Stop Job
-    </button>
-</form>
+    
+        <button
+            (click)="startJob()" 
+            [hidden]="!enabled"
+            class="btn btn-lg btn-primary btn-block">
+            Start Job
+        </button>
+        <button 
+            (click)="stopJob()"
+            [hidden]="enabled"
+            class="btn btn-lg btn-primary btn-block">
+            Stop Job
+        </button>
+    </form>
+</div>

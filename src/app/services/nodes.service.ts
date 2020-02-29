@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpHelper } from 'src/app/services/httpHelper.service';
+import { HttpHelper } from 'src/app/services/http-helper.service';
 
 /**
  * Consumes a REST endpoint to GET information about the nodes in the Kubernetes cluster.

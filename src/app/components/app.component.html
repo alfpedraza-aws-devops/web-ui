@@ -1,42 +1,5 @@
-<div *ngIf="loading">
-    <div style="position: absolute; z-index: 1000; top: 0; left: 0;
-        width: 100%; height: 100%; background-color: black; opacity: 0.8;">
-    </div>
-    <div style="position: absolute; z-index: 1001; top: 50%; left: 50%;
-        transform: translate(-50%,-50%);color:white;">Loading...</div>
-</div> 
-
-<div [hidden]="!initialized">
-<nav class="navbar bg-primary text-light">
-    <h1>Kubernetes Load Test</h1>
-</nav>
-<div class="container-fluid">
-    <div class="col-md-4 p-2 float-md-right">
-        <job-parameters-form
-            [enabled]="(jobCount == 0)"
-            [jobParameters]="jobParameters"
-            (jobStarted)="onJobStarted($event)"
-            (jobStopped)="onJobStopped($event)">
-        </job-parameters-form>
-    </div>
-
-    <div class="col-md-8 p-2 float-md-left">
-        <nodes-status
-            [nodesStatus]="nodesStatus">
-        </nodes-status>
-    </div>
-
-    <div class="col-md-8 p-2 float-md-left">
-        <job-status
-            [jobStatus]="jobStatus">
-        </job-status>
-    </div>
-
-    <div class="col-md-4 p-2 float-md-right">
-        <event-display
-            [lastUpdate]="lastUpdate"
-            [statusDisplay]="statusDisplay">
-        </event-display>
-    </div>
-</div>
+<div>
+    <title-bar></title-bar>
+    <load-test></load-test>
+    <loading-popup></loading-popup>
 </div>

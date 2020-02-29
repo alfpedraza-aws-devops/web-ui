@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { JobParameters } from 'src/app/models/jobParameters.model';
+import { JobParameters } from 'src/app/models/job-parameters.model';
 
 @Component({
   selector: 'job-parameters-form',

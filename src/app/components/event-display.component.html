@@ -1,4 +1,9 @@
-<h2>Events</h2>
-<p>Last Update: {{lastUpdate | date:'medium'}}</p>
-<ul><li *ngFor="let status of statusDisplay">
-    {{status.date | date:'medium'}} - {{status.message}}</li></ul>
+<div>
+    <h2>Events</h2>
+    <p>Last Update: {{lastUpdate | date:'medium'}}</p>
+    <ul>
+        <li *ngFor="let status of statusDisplay">
+            {{status.date | date:'medium'}} - {{status.message}}
+        </li>
+    </ul>
+</div>
