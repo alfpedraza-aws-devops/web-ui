@@ -13,6 +13,7 @@ import { JobParametersFormComponent } from './components/load-test/job-parameter
 import { LoadTestComponent } from './components/load-test/load-test.component';
 import { TitleBarComponent } from './components/title-bar/title-bar.component';
 import { LoadingPopupComponent } from './components/loading-popup/loading-popup.component';
+import { BlankPopupComponent } from './components/blank-popup/blank-popup.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { LoadingPopupComponent } from './components/loading-popup/loading-popup.
     LoadTestComponent,
     TitleBarComponent,
     LoadingPopupComponent,
+    BlankPopupComponent,
     AppComponent,
   ],
   imports: [

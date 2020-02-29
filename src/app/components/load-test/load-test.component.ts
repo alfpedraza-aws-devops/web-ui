@@ -1,12 +1,13 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { forkJoin, Observable, Subscription } from 'rxjs';
+import { forkJoin, Subscription } from 'rxjs';
 
 import { JobParameters } from 'src/app/models/job-parameters.model';
-import { MessageItem } from 'src/app/models/message-item.model';
+import { EventItem } from 'src/app/models/event-item.model';
 import { FibonacciJobService } from 'src/app/services/fibonacci-job.service';
 import { NodesService } from 'src/app/services/nodes.service';
 import { JobParametersFormComponent } from 'src/app/components/load-test/job-parameters-form.component';
 import { LoadingPopupService } from '../../services/loading-popup.service';
+import { BlankPopupService } from 'src/app/services/blank-popup.service';
 
 @Component({
   selector: 'load-test',
@@ -22,12 +23,12 @@ export class LoadTestComponent implements OnInit, OnDestroy {
   public nodesCount: number;
   public nodesStatus: string;
   public lastUpdate: Date;
-  public statusDisplay: MessageItem[] = [];
+  public eventList: EventItem[] = [];
 
   // UI Properties
   @ViewChild(JobParametersFormComponent, { static: true })
   private jobParametersForm: JobParametersFormComponent;
-  private canDetectChanges: boolean = false;
+  private isInitialized: boolean = false;
   private refreshSubscription: Subscription;
   private timeoutId: any;
   
@@ -35,7 +36,8 @@ export class LoadTestComponent implements OnInit, OnDestroy {
   constructor(
     private jobService: FibonacciJobService,
     private nodesService: NodesService,
-    private popupService: LoadingPopupService
+    private popupService: LoadingPopupService,
+    private blankService: BlankPopupService
   ) { }
 
   public ngOnInit(): void {
@@ -48,12 +50,14 @@ export class LoadTestComponent implements OnInit, OnDestroy {
   }
 
   private async initialize(): Promise<void> {
+    this.blankService.show();
+    this.popupService.show();
+
     this.jobCount = await this.jobService.getCount();
     if (this.jobCount == 1) {
       this.jobParameters = await this.jobService.getParameters();
     } else {
-      this.jobParameters.requests = 1000;
-      this.jobParameters.concurrency = 20;
+      this.jobParameters = new JobParameters(2000, 20);
     }
     this.jobParametersForm.setJobParameters(this.jobParameters);
   }
@@ -75,7 +79,6 @@ export class LoadTestComponent implements OnInit, OnDestroy {
   }
 
   private refreshModel(data: any[]): void {
-    console.log("Hello");
     this.previousNodesCount = this.nodesCount;
     this.jobCount = data[0];
     this.jobStatus = data[1];
@@ -83,19 +86,29 @@ export class LoadTestComponent implements OnInit, OnDestroy {
     this.nodesStatus = data[3];
     this.lastUpdate = new Date();
     this.detectNodeChanges();
-    this.canDetectChanges = true;
+    this.completeInitialize();
+  }
+
+  private completeInitialize() {
+    if (!this.isInitialized) {
+      this.blankService.hide();
+      this.popupService.hide();
+      this.isInitialized = true;
+    }
   }
 
   private detectNodeChanges(): void {
-    if (!this.canDetectChanges) return;
+    if (!this.isInitialized) return;
+
     if (this.nodesCount > this.previousNodesCount) {
       let difference = this.nodesCount - this.previousNodesCount;
       let message = "(" + difference + ") nodes were added."
-      this.pushMessage(message);
+      this.addEvent(message);
+
     } else if (this.nodesCount < this.previousNodesCount) {
       let difference = this.previousNodesCount - this.nodesCount;
       let message = "(" + difference + ") nodes were removed."
-      this.pushMessage(message);
+      this.addEvent(message);
     }
   }
 
@@ -109,7 +122,7 @@ export class LoadTestComponent implements OnInit, OnDestroy {
       this.popupService.show();
       await this.jobService.start(this.jobParameters);
       this.jobCount = await this.jobService.getCount();
-      this.pushMessage("Job started");
+      this.addEvent("Job started");
     } finally {
       this.popupService.hide();
     }
@@ -120,17 +133,15 @@ export class LoadTestComponent implements OnInit, OnDestroy {
       this.popupService.show();
       await this.jobService.stop();
       this.jobCount = await this.jobService.getCount();
-      this.pushMessage("Job stopped");
+      this.addEvent("Job stopped");
     } finally {
       this.popupService.hide();
     }
   }
 
-  private pushMessage(message: string): void {
-    let item = new MessageItem();
-    item.date = new Date();
-    item.message = message; 
-    this.statusDisplay.push(item);
+  private addEvent(message: string): void {
+    let item = new EventItem(message);
+    this.eventList.push(item);
   }
 
 }

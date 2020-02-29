@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { MessageItem } from 'src/app/models/message-item.model';
+import { MessageItem } from 'src/app/models/event-item.model';
 
 @Component({
   selector: 'event-display',
@@ -8,6 +8,6 @@ import { MessageItem } from 'src/app/models/message-item.model';
 export class EventDisplayComponent {
 
   @Input() public lastUpdate: Date = new Date();
-  @Input() public statusDisplay: MessageItem[] = [];
+  @Input() public eventList: EventItem[] = [];
 
 }
