@@ -10,7 +10,7 @@ import { Component, Input } from '@angular/core';
 export class HpaStatusComponent {
 
   /**
-   * The status information of the horizontal pod autoscaler.
+   * The status of the fibonacci horizontal pod autoscaler.
    */
   @Input() public hpaStatus: string = "";
 

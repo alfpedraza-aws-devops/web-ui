@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 /**
- * Holds application-scope state about the loading popup.
+ * Holds application-wide state about the loading popup.
  * The popup will be displayed by the loading-popup-component.
  */
 @Injectable({ providedIn: "root"})

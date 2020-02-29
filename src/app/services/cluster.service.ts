@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpHelper } from 'src/app/services/http-helper.service';
 
 /**
- * Consumes a REST endpoint to GET information about the nodes
+ * Consumes a REST endpoint to GET information about the machines
  * in the Kubernetes cluster.
  */
 @Injectable({ providedIn: "root"})
@@ -16,16 +16,16 @@ export class ClusterService {
     public constructor(private http: HttpHelper) { }
 
     /**
-     * Gets the number of nodes present in the cluster.
+     * Gets the number of machines present in the cluster.
      * @returns A Promise<number> object representing the number
-     * of nodes present in the cluster.
+     * of machines present in the cluster.
      */
     public getMachineCount(): Promise<number> {
         return this.http.get<number>("/api/cluster/machine-count");
     }
 
     /**
-     * Gets the CPU and memory metrics of the nodes present in the cluster.
+     * Gets the CPU and memory metrics of the machines present in the cluster.
      * @returns A Promise<string> object representing the metrics.
      */
     public getStatus(): Promise<string> {

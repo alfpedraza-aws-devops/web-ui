@@ -4,13 +4,15 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { JobParameters } from 'src/app/models/job-parameters.model';
 
 /**
- * Displays a form to take the values of the job parameters.
+ * Displays a form to take the values for the job parameters.
  */
 @Component({
   selector: 'job-parameters-form',
   templateUrl: './job-parameters-form.component.html'
 })
 export class JobParametersFormComponent implements OnInit {
+
+  //#region Parameters
 
   /**
    * Determines whether the form controls should be enabled or not.
@@ -53,8 +55,10 @@ export class JobParametersFormComponent implements OnInit {
    */
   public constructor(private formBuilder: FormBuilder) { }
 
+  //#endregion
+  
   /**
-   * An Angular callback executed during the component initialization.
+   * An Angular callback executed during component initialization.
    */
   public ngOnInit(): void {
     this.initializeForm();
@@ -84,14 +88,14 @@ export class JobParametersFormComponent implements OnInit {
 
   /**
    * Updates the values of the form controls.
-   * @param parameters The value to update.
+   * @param parameters The values to update.
    */
   public setJobParameters(parameters: JobParameters): void {
     this.form.patchValue(parameters);
   }
 
   /**
-   * Emits the jobStarted event if the form is valid.
+   * Emits the jobStarted event only if the form is valid.
    */
   public startJob() {
     this.submitted = true;
