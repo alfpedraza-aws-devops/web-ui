@@ -9,21 +9,21 @@
     </div>
 
     <div class="col-md-8 p-2 float-md-left">
-        <nodes-status
-            [nodesStatus]="nodesStatus">
-        </nodes-status>
+        <cluster-status
+            [clusterStatus]="clusterStatus">
+        </cluster-status>
     </div>
 
     <div class="col-md-8 p-2 float-md-left">
-        <job-status
-            [jobStatus]="jobStatus">
-        </job-status>
+        <hpa-status
+            [hpaStatus]="hpaStatus">
+        </hpa-status>
     </div>
 
     <div class="col-md-4 p-2 float-md-right">
-        <event-display
+        <event-list
             [lastUpdate]="lastUpdate"
             [eventList]="eventList">
-        </event-display>
+        </event-list>
     </div>
 </div>

@@ -2,26 +2,25 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from "@angular/forms";
-
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './components/app.component';
 
-import { NodesStatusComponent } from './components/load-test/nodes-status.component';
-import { JobStatusComponent } from './components/load-test/job-status.component';
-import { EventDisplayComponent } from './components/load-test/event-display.component';
-import { JobParametersFormComponent } from './components/load-test/job-parameters-form.component';
-import { LoadTestComponent } from './components/load-test/load-test.component';
+import { ClusterStatusComponent } from './components/cluster-autoscaler-test/cluster-status.component';
+import { HpaStatusComponent } from './components/cluster-autoscaler-test/hpa-status.component';
+import { EventListComponent } from './components/cluster-autoscaler-test/event-list.component';
+import { JobParametersFormComponent } from './components/cluster-autoscaler-test/job-parameters-form.component';
+import { ClusterAutoscalerTestComponent } from './components/cluster-autoscaler-test/cluster-autoscaler-test.component';
 import { TitleBarComponent } from './components/title-bar/title-bar.component';
 import { LoadingPopupComponent } from './components/loading-popup/loading-popup.component';
 import { BlankPopupComponent } from './components/blank-popup/blank-popup.component';
+import { AppComponent } from './components/app.component';
 
 @NgModule({
   declarations: [
-    NodesStatusComponent,
-    JobStatusComponent,
-    EventDisplayComponent,
+    ClusterStatusComponent,
+    HpaStatusComponent,
+    EventListComponent,
     JobParametersFormComponent,
-    LoadTestComponent,
+    ClusterAutoscalerTestComponent,
     TitleBarComponent,
     LoadingPopupComponent,
     BlankPopupComponent,
