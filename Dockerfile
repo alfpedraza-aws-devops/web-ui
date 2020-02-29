@@ -6,7 +6,7 @@ WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 COPY package.json /app/package.json
 RUN npm install
-RUN npm install -g @angular/cli@7.3.9
+RUN npm install -g @angular/cli@8.3.23
 COPY . /app
 RUN ng build --output-path=dist --configuration=production
 
