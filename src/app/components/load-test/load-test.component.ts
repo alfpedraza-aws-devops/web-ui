@@ -5,8 +5,8 @@ import { JobParameters } from 'src/app/models/job-parameters.model';
 import { MessageItem } from 'src/app/models/message-item.model';
 import { FibonacciJobService } from 'src/app/services/fibonacci-job.service';
 import { NodesService } from 'src/app/services/nodes.service';
-import { JobParametersFormComponent } from 'src/app/components/job-parameters-form.component';
-import { LoadingPopupService } from '../services/loading-popup.service';
+import { JobParametersFormComponent } from 'src/app/components/load-test/job-parameters-form.component';
+import { LoadingPopupService } from '../../services/loading-popup.service';
 
 @Component({
   selector: 'load-test',

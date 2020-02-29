@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { LoadingPopupService } from '../services/loading-popup.service';
+import { LoadingPopupService } from '../../services/loading-popup.service';
 
 @Component({
   selector: 'loading-popup',

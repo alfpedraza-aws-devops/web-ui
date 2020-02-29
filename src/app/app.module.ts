@@ -6,13 +6,13 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './components/app.component';
 
-import { NodesStatusComponent } from './components/nodes-status.component';
-import { JobStatusComponent } from './components/job-status.component';
-import { EventDisplayComponent } from './components/event-display.component';
-import { JobParametersFormComponent } from './components/job-parameters-form.component';
-import { LoadTestComponent } from './components/load-test.component';
-import { TitleBarComponent } from './components/title-bar.component';
-import { LoadingPopupComponent } from './components/loading-popup.component';
+import { NodesStatusComponent } from './components/load-test/nodes-status.component';
+import { JobStatusComponent } from './components/load-test/job-status.component';
+import { EventDisplayComponent } from './components/load-test/event-display.component';
+import { JobParametersFormComponent } from './components/load-test/job-parameters-form.component';
+import { LoadTestComponent } from './components/load-test/load-test.component';
+import { TitleBarComponent } from './components/title-bar/title-bar.component';
+import { LoadingPopupComponent } from './components/loading-popup/loading-popup.component';
 
 @NgModule({
   declarations: [
