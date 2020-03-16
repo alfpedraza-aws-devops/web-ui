@@ -6,7 +6,8 @@
 
 export const environment = {
   production: false,
-  kubernetesApiUrl: window["env"]["kubernetesApiUrl"]
+  kubernetesApiUrl: window["env"]["kubernetesApiUrl"],
+  environmentName:  window["env"]["environmentName"]
 };
 
 /*
