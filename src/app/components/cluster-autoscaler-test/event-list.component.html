@@ -1,9 +1,9 @@
 <div>
     <h2>Events</h2>
-    <p>Last Update: {{lastUpdate | date:'medium'}}</p>
+    <p>Last Update: {{ lastUpdate | date:'medium' }}</p>
     <ul>
         <li *ngFor="let event of eventList">
-            {{event.date | date:'medium'}} - {{event.message}}
+            {{ event.date | date:'medium' }} - {{ event.message }}
         </li>
     </ul>
 </div>

@@ -8,8 +8,8 @@
                 formControlName="requests"
                 type="number"
                 min="1" max="10000"
-                [attr.disabled]="!enabled ? 'disabled' : null"
                 class="form-control"
+                [attr.disabled]="!enabled ? 'disabled' : null"
                 [ngClass]="{ 'is-invalid': submitted && f.requests.errors }"
                 placeholder="Enter number of requests" />
             <div *ngIf="submitted && f.requests.errors" class="invalid-feedback">
@@ -23,8 +23,8 @@
                 formControlName="concurrency"
                 type="number" 
                 min="1" max="100"
-                [attr.disabled]="!enabled ? 'disabled' : null"
                 class="form-control"
+                [attr.disabled]="!enabled ? 'disabled' : null"
                 [ngClass]="{ 'is-invalid': submitted && f.concurrency.errors }"
                 placeholder="Enter number of concurrency" />
             <div *ngIf="submitted && f.concurrency.errors" class="invalid-feedback">

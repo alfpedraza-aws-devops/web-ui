@@ -11,7 +11,7 @@ export class ClusterService {
     /**
      * Creates a new instance of the ClusterService class.
      * @param http A helper service used to perform HTTP requests
-     * to the kubernetes-api endpoint.
+     * to the kubernetes-api REST endpoint.
      */
     public constructor(private http: HttpHelper) { }
 

@@ -11,12 +11,13 @@ export class FibonacciJobService {
     /**
      * Creates a new instance of the FibonacciJobService class.
      * @param http A helper service used to perform HTTP requests
-     * to the kubernetes-api endpoint.
+     * to the kubernetes-api REST endpoint.
      */
     public constructor(private http: HttpHelper) { }
 
     /**
      * Gets the number of fibonacci jobs running in the cluster.
+     * Either can be 0 or 1 by explicit application design.
      * @returns A Promise<number> object representing the number
      * of fibonacci jobs running.
      */

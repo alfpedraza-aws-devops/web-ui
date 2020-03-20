@@ -1,15 +1,15 @@
 /**
- * Holds information about an event.
+ * Holds information about an application event.
  */
 export class EventItem {
 
     /**
-     * The date when the event was generated.
+     * The date when the application event was generated.
      */
     public date: Date;
 
     /**
-     * The description of this event.
+     * The description of this application event.
      */
     public message: string;
 

@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
 /**
- * A service used to perform HTTP requests to the kuberntes-api service.
+ * A service used to perform HTTP requests to the kubernetes-api service.
  */
 @Injectable({ providedIn: "root"})
 export class HttpHelper {

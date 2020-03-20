@@ -2,6 +2,8 @@ import { Component, Input } from '@angular/core';
 
 /**
  * Displays the information of the Fibonacci Horizontal Pod Autoscaler.
+ * This includes data about how many pods are running, the CPU and RAM
+ * metrics of the whole HPA, etc.
  */
 @Component({
   selector: 'hpa-status',

@@ -28,13 +28,13 @@ export class ClusterAutoscalerTestComponent implements OnInit, OnDestroy {
   public jobParameters: JobParameters = new JobParameters();
   
   /**
-   * The number of machines present in the cluster.
+   * The number of nodes running in the Kubernetes cluster.
    */
-  public machineCount: number = 0;
-  private previousMachineCount: number = 0;
+  public nodeCount: number = 0;
+  private previousNodeCount: number = 0;
 
   /**
-   * The CPU and memory metrics of the machines present in the cluster.
+   * The CPU and memory metrics of the nodes present in the cluster.
    */
   public clusterStatus: string = "";
 
@@ -117,7 +117,7 @@ export class ClusterAutoscalerTestComponent implements OnInit, OnDestroy {
       forkJoin(
         this.jobService.getCount(),
         this.clusterService.getHpaStatus(),
-        this.clusterService.getMachineCount(),
+        this.clusterService.getNodeCount(),
         this.clusterService.getStatus()
       ).subscribe(
         data  => { this.refreshData(data); },
@@ -129,29 +129,29 @@ export class ClusterAutoscalerTestComponent implements OnInit, OnDestroy {
   }
 
   // Refresh the data with the results of the kubernetes-api service calls.
-  private refreshData([jobCount, hpaStatus, machineCount, clusterStatus]): void {
-    this.previousMachineCount = this.machineCount;
+  private refreshData([jobCount, hpaStatus, nodeCount, clusterStatus]): void {
+    this.previousNodeCount = this.nodeCount;
     this.jobCount = jobCount;
     this.hpaStatus = hpaStatus;
-    this.machineCount = machineCount;
+    this.nodeCount = nodeCount;
     this.clusterStatus = clusterStatus;
     this.lastUpdate = new Date();
     this.detectClusterChanges();
     this.completeInitialize();
   }
 
-  // Detects if several machines have been added or removed from the
+  // Detects if several nodes have been added or removed from the
   // cluster and appends a new event to the event list.
   private detectClusterChanges(): void {
     if (!this.isInitialized) return;
 
-    if (this.machineCount > this.previousMachineCount) {
-      let difference = this.machineCount - this.previousMachineCount;
+    if (this.nodeCount > this.previousNodeCount) {
+      let difference = this.nodeCount - this.previousNodeCount;
       let message = "(" + difference + ") nodes were added to the cluster."
       this.addEvent(message);
 
-    } else if (this.machineCount < this.previousMachineCount) {
-      let difference = this.previousMachineCount - this.machineCount;
+    } else if (this.nodeCount < this.previousNodeCount) {
+      let difference = this.previousNodeCount - this.nodeCount;
       let message = "(" + difference + ") nodes were removed from the cluster."
       this.addEvent(message);
     }

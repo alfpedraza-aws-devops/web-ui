@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { LoadingPopupService } from 'src/app/services/loading-popup.service';
 
 /**
- * Displays a popup frame that will show the "Loading" message.
+ * Displays a popup frame that will show the "Loading..." message.
  */
 @Component({
   selector: 'loading-popup',

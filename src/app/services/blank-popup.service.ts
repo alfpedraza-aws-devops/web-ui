@@ -8,5 +8,5 @@ import { LoadingPopupService } from 'src/app/services/loading-popup.service';
 @Injectable({ providedIn: "root"})
 export class BlankPopupService extends LoadingPopupService {
     // Inherits all the functionality from the LoadingPopupservice.
-    // No more logic to implement here.
+    // No more extra logic to implement here.
 }

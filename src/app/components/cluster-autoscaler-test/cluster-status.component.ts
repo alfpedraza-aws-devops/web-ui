@@ -1,7 +1,8 @@
 import { Component, Input } from '@angular/core';
 
 /**
- * Displays the CPU and memory metrics of the machines in the cluster.
+ * Displays the CPU and memory metrics of the nodes
+ * running in the cluster.
  */
 @Component({
   selector: 'cluster-status',

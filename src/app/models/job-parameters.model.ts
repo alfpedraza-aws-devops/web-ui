@@ -1,11 +1,11 @@
 /**
  * Contains information about the parameters used
- * to create a fibonacci job.
+ * to create a fibonacci job in the Kubernetes cluster.
  */
 export class JobParameters {
 
   /**
-   * Specfies the number of requests to perform on the job.
+   * Specfies the number of requests to perform by the job.
    */
   public requests: number;
 
